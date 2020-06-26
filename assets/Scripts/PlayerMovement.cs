@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
         jumpHeld = Input.GetButton("Jump");
         crouchHeld = Input.GetButton("Crouch");
         isMoving = Input.GetButton("Horizontal");
+        print(jumpPressed+" "+jumpHeld);
     }
     private void FixedUpdate() {
         GroundMovement();
@@ -89,17 +90,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (isOnGround)
         {
-            print("1="+lastVelocity);
             rigidbody_robin.velocity = new Vector2(xVelocity*StandardSpeed, rigidbody_robin.velocity.y);
         }
         else if(!isOnGround && isJump && lastVelocity!=0)
         {
-            print("2: xVelocity="+xVelocity +" lastVelocity="+lastVelocity);
             rigidbody_robin.velocity = new Vector2(lastVelocity*StandardSpeed, rigidbody_robin.velocity.y);
         }
         else if(!isOnGround && !isJump)
         {
-            print("3: xVelocity="+xVelocity +" lastVelocity="+lastVelocity);
             rigidbody_robin.velocity = new Vector2(xVelocity*StandardSpeed, rigidbody_robin.velocity.y);
         }
         // if (!isOnGround && !isJump && isMoving)
@@ -115,9 +113,9 @@ public class PlayerMovement : MonoBehaviour
     }
     void inAirMovement()
     {
-        if (jumpPressed && isOnGround && !isJump)
+        //jump up
+        if (jumpHeld && isOnGround && !isJump)
         {
-            print("not onground");
             isJump = true;
             isOnGround=false;
             jumpTime = Time.time+juampHoldDuration;
@@ -125,7 +123,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (isOnGround && isJump)
         {
-            print("onground");
             // if(jumpHeld)
             //     rigidbody_robin.AddForce(new Vector2(0f, jumpHoldForce), ForceMode2D.Impulse);
             // if (jumpTime< Time.time)
@@ -135,6 +132,12 @@ public class PlayerMovement : MonoBehaviour
         {
             isJump = true;
         }
+        //jump forward
+        if(jumpPressed)
+        {
+            
+        }
+
 
     }
     void FilpDirection()
