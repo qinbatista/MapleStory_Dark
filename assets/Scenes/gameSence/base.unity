@@ -9042,9 +9042,14 @@ MonoBehaviour:
   crouchSpeedDivisor: 3
   notOnGroundSpeedDivisor: 6
   jumpForce: 12
+  jumpPush: 25
   jumpHoldForce: 1.9
   juampHoldDuration: 0.1
   crouchJumpBoost: 2.5
+  firstJump: 0
+  secondJump: 0
+  JumpinAirMinDuration: 0.08
+  JumpinAirMaxDuration: 0.3
   isCrouch: 0
   isOnGround: 0
   isJump: 0

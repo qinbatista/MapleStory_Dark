@@ -12,14 +12,21 @@ public class PlayerMovement : MonoBehaviour
     public float notOnGroundSpeedDivisor = 10f;
     //juamp
     public float jumpForce = 60f;
+    public float jumpPush = 1000f;
     public float jumpHoldForce = 1.9f;
     public float juampHoldDuration = 0.1f;
     public float crouchJumpBoost = 2.5f;
+    public float firstJump = 0;
+    public float secondJump = 0;
     float jumpTime;
+    public float JumpinAirMinDuration = 0.1f;
+    public float JumpinAirMaxDuration = 0.3f;
     //status
     public bool isCrouch;
     public bool isOnGround;
     public bool isJump;
+    public bool isPushed;
+    float left_stand = 1;
     //enviernment
     public LayerMask groundLayer;
     float xVelocity;
@@ -52,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
         jumpHeld = Input.GetButton("Jump");
         crouchHeld = Input.GetButton("Crouch");
         isMoving = Input.GetButton("Horizontal");
-        print(jumpPressed+" "+jumpHeld);
     }
     private void FixedUpdate() {
         GroundMovement();
@@ -94,7 +100,22 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(!isOnGround && isJump && lastVelocity!=0)
         {
-            rigidbody_robin.velocity = new Vector2(lastVelocity*StandardSpeed, rigidbody_robin.velocity.y);
+            if(jumpPressed && !isOnGround && isPushed==false)
+            {
+                print("psuh");
+                secondJump = Time.time;
+                if (secondJump-firstJump<JumpinAirMaxDuration&& secondJump-firstJump>JumpinAirMinDuration)
+                {
+                    rigidbody_robin.AddForce(new Vector2(0f,jumpForce*0.3f),ForceMode2D.Impulse);
+                    rigidbody_robin.AddForce(new Vector2(jumpPush*left_stand,0f),ForceMode2D.Impulse);
+                    isPushed=true;
+                }
+            }
+            else if(isPushed==false)
+            {
+                // print("no psuh");
+                rigidbody_robin.velocity = new Vector2(lastVelocity*StandardSpeed, rigidbody_robin.velocity.y);
+            }
         }
         else if(!isOnGround && !isJump)
         {
@@ -118,8 +139,8 @@ public class PlayerMovement : MonoBehaviour
         {
             isJump = true;
             isOnGround=false;
-            jumpTime = Time.time+juampHoldDuration;
             rigidbody_robin.AddForce(new Vector2(0f,jumpForce),ForceMode2D.Impulse);
+            firstJump = Time.time;
         }
         else if (isOnGround && isJump)
         {
@@ -127,25 +148,39 @@ public class PlayerMovement : MonoBehaviour
             //     rigidbody_robin.AddForce(new Vector2(0f, jumpHoldForce), ForceMode2D.Impulse);
             // if (jumpTime< Time.time)
             isJump = false;
+            isPushed = false;
         }
         else if (!isOnGround)
         {
             isJump = true;
         }
         //jump forward
-        if(jumpPressed)
+        if(jumpPressed && !isOnGround && isPushed==false)
         {
-            
+            secondJump = Time.time;
+            if (secondJump-firstJump<JumpinAirMaxDuration&& secondJump-firstJump>JumpinAirMinDuration)
+            {
+                rigidbody_robin.AddForce(new Vector2(0f,jumpForce*0.3f),ForceMode2D.Impulse);
+                rigidbody_robin.AddForce(new Vector2(jumpPush*left_stand,0f),ForceMode2D.Impulse);
+                isPushed=true;
+            }
         }
 
 
     }
+
     void FilpDirection()
     {
         if (xVelocity<0)
+        {
             transform.localScale = new Vector2(-1,1);
+            left_stand = -1;
+        }
         if (xVelocity>0)
+        {
             transform.localScale = new Vector2(1,1);
+            left_stand = 1;
+        }
     }
     void Crouch()
     {
