@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
     void GroundMovement()
     {
         xVelocity = Input.GetAxisRaw("Horizontal");//
-        print("xVelocity="+xVelocity);
         rigidbody_robin.velocity = new Vector2(xVelocity*speed, rigidbody_robin.velocity.y);
         FilpDirection();
     }

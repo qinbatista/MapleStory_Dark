@@ -82,7 +82,6 @@
      <None Include="assets\Addons\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
      <None Include="assets\VFX\Shaders\Fog2.shader" />
      <None Include="assets\Addons\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-     <None Include="assets\Tilemaps\Brushes\readme.txt" />
      <None Include="assets\Addons\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="assets\Addons\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="assets\Addons\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
@@ -93,7 +92,6 @@
      <None Include="assets\Addons\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="assets\Addons\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
      <None Include="assets\Addons\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
-     <None Include="assets\Tilemaps\Tiles\Platforms\readme.txt" />
      <None Include="assets\Addons\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
      <None Include="assets\Addons\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="assets\Addons\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
