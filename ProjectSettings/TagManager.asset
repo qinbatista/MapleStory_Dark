@@ -15,8 +15,8 @@ TagManager:
   - 
   - ground
   - player
-  - 
-  - 
+  - BackGroundDetail
+  - PositionMovement
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: Platforms
     uniqueID: 2743093933
+    locked: 0
+  - name: PositionMovement
+    uniqueID: 1073761303
     locked: 0
   - name: Player
     uniqueID: 3836513753
