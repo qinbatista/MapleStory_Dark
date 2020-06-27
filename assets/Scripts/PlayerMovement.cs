@@ -25,9 +25,13 @@ public class PlayerMovement : MonoBehaviour
     public bool isCrouch;
     public bool isOnGround;
     public bool isJump;
+    public bool isHeadBlocked;
     public bool isPushed;
     float left_stand = 1;
     //enviernment
+    public float footOffset  = 0.4f;
+    public float headClearance = 0.5f;
+    public float groundDistance = 0.2f;
     public LayerMask groundLayer;
     float xVelocity;
     bool jumpPressed;
@@ -67,17 +71,28 @@ public class PlayerMovement : MonoBehaviour
     }
     void PhysicsCheck()
     {
-        if (coll_robin.IsTouchingLayers(groundLayer))
+        RaycastHit2D leftCheck = Raycost(new Vector2(-footOffset,0f), Vector2.down, groundDistance, groundLayer);
+        RaycastHit2D rightCheck = Raycost(new Vector2(footOffset,0f), Vector2.down, groundDistance, groundLayer);
+        if (leftCheck || rightCheck)
             isOnGround = true;
         else
             isOnGround = false;
+        RaycastHit2D headCheck = Raycost(new Vector2(0f, coll_robin.size.y), Vector2.up, headClearance, groundLayer);
+        if(headCheck)
+        {
+            isHeadBlocked = true;
+        }
+        else
+        {
+            isHeadBlocked = false;
+        }
     }
     void GroundMovement()
     {
         FilpDirection();
         if (crouchHeld)
             Crouch();
-        else if (!crouchHeld && isCrouch)
+        else if (!crouchHeld && isCrouch && !isHeadBlocked)
             StandUp();
         xVelocity = Input.GetAxisRaw("Horizontal");
         if (xVelocity >0 && isJump==false)
@@ -102,7 +117,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if(jumpPressed && !isOnGround && isPushed==false)
             {
-                print("psuh");
                 secondJump = Time.time;
                 if (secondJump-firstJump<JumpinAirMaxDuration&& secondJump-firstJump>JumpinAirMinDuration)
                 {
@@ -113,7 +127,6 @@ public class PlayerMovement : MonoBehaviour
             }
             else if(isPushed==false)
             {
-                // print("no psuh");
                 rigidbody_robin.velocity = new Vector2(lastVelocity*StandardSpeed, rigidbody_robin.velocity.y);
             }
         }
@@ -121,15 +134,6 @@ public class PlayerMovement : MonoBehaviour
         {
             rigidbody_robin.velocity = new Vector2(xVelocity*StandardSpeed, rigidbody_robin.velocity.y);
         }
-        // if (!isOnGround && !isJump && isMoving)
-        // {
-        //     rigidbody_robin.velocity = new Vector2(xVelocity*StandardSpeed, rigidbody_robin.velocity.y);
-        // }
-        // else if(!isOnGround && !isJump && isMoving)
-        // {
-        //     print("3: xVelocity="+xVelocity +" xVelocity="+xVelocity);
-        //     rigidbody_robin.velocity = new Vector2(xVelocity*StandardSpeed, rigidbody_robin.velocity.y);
-        // }
 
     }
     void inAirMovement()
@@ -193,5 +197,13 @@ public class PlayerMovement : MonoBehaviour
         isCrouch=false;
         coll_robin.size = colliderStandSize;
         coll_robin.offset = colliderStandOffset;
+    }
+    RaycastHit2D  Raycost(Vector2 offset, Vector2 rayDirection, float length, LayerMask layer)
+    {
+        Vector2 pos = transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(pos+ offset, rayDirection, length, layer);
+        Color color = hit? Color.red : Color.green;
+        Debug.DrawRay(pos+offset, rayDirection* length, color);
+        return hit;
     }
 }
