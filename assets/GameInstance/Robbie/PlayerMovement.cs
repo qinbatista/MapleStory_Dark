@@ -33,14 +33,14 @@ public class PlayerMovement : MonoBehaviour
     //enviernment
     public float footOffset  = 0.4f;
     public float headClearance = 0.5f;
-    public float StairClearance = 0.3f;
+    public float StairClearance = 0.5f;
     public float groundDistance = 0.2f;
     float playerHeight;
     public float eyeHeight = 1.5f;
     public float grabDistance = 0.4f;
     public float reachOffset = 0.7f;
-    public LayerMask groundLayer;
-    public LayerMask PositionMovementLayer;
+    public LayerMask GroundLayer;
+    public LayerMask StairsLayer;
     float xVelocity;
     float yVelocity;
     bool jumpPressed;
@@ -84,13 +84,13 @@ public class PlayerMovement : MonoBehaviour
     }
     void PhysicsCheck()
     {
-        RaycastHit2D leftCheck = Raycast(new Vector2(-footOffset,0f), Vector2.down, groundDistance, groundLayer);
-        RaycastHit2D rightCheck = Raycast(new Vector2(footOffset,0f), Vector2.down, groundDistance, groundLayer);
+        RaycastHit2D leftCheck = Raycast(new Vector2(-footOffset,0f), Vector2.down, groundDistance, GroundLayer);
+        RaycastHit2D rightCheck = Raycast(new Vector2(footOffset,0f), Vector2.down, groundDistance, GroundLayer);
         if (leftCheck || rightCheck)
             isOnGround = true;
         else
             isOnGround = false;
-        RaycastHit2D headCheck = Raycast(new Vector2(0f, coll_robin.size.y), Vector2.up, headClearance, groundLayer);
+        RaycastHit2D headCheck = Raycast(new Vector2(0f, coll_robin.size.y), Vector2.up, headClearance, GroundLayer);
         if(headCheck)
         {
             isHeadBlocked = true;
@@ -99,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isHeadBlocked = false;
         }
-        RaycastHit2D stairCheck = Raycast(new Vector2(-0.25f, coll_robin.size.y), Vector2.right, StairClearance, PositionMovementLayer);
+        RaycastHit2D stairCheck = Raycast(new Vector2(-0.25f, coll_robin.size.y), Vector2.right, StairClearance, StairsLayer);
         if(stairCheck)
         {
             isAroundStair = true;
