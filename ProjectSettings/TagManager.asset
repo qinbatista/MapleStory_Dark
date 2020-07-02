@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - LayerGround
+  - LayerBackGround
   - LayerPlayer
   - LayerBackGroundDetail
-  - LayerPositionMovement
-  - 
+  - LayerStaris
+  - LayerTransmission
   - 
   - 
   - 
@@ -50,9 +50,15 @@ TagManager:
   - name: PositionMovement
     uniqueID: 1073761303
     locked: 0
+  - name: Foreground
+    uniqueID: 3757281517
+    locked: 0
+  - name: Staris
+    uniqueID: 3408964691
+    locked: 0
   - name: Player
     uniqueID: 3836513753
     locked: 0
-  - name: Foreground
-    uniqueID: 3757281517
+  - name: Transmission
+    uniqueID: 1582466247
     locked: 0
