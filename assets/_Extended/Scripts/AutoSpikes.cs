@@ -14,7 +14,7 @@ public class AutoSpikes : MonoBehaviour
 
 	void Start ()
 	{
-		playerLayer = LayerMask.NameToLayer("Player");
+		playerLayer = LayerMask.NameToLayer("LayerPlayer");
 
 		anim = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();

@@ -43,4 +43,13 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetFloat(fallID,rb.velocity.y); //与Animator中的verticalVelocity值对应（y轴动力加速度对应的动画）
 
     }
+
+    public void StepAudio() {
+        AudioManger.PlayFootStepAudio();
+    }
+
+    public void CrouchStepAudio()
+    {
+        AudioManger.PlayFootStepAudio();
+    }
 }

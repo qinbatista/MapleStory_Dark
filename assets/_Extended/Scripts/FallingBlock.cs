@@ -17,7 +17,7 @@ public class FallingBlock : MonoBehaviour
 		box = GetComponent<BoxCollider2D>();
 		audioSource = GetComponent<AudioSource>();
 
-		playerLayer = LayerMask.NameToLayer("Player");
+		playerLayer = LayerMask.NameToLayer("LayerPlayer");
 		fallParamID = Animator.StringToHash("Activate");
 	}
 

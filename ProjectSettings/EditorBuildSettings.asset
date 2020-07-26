@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: assets/Scenes/gameSence/BattleLevel1.unity
+    guid: bafc5d379579744a6acbb16466e278ea
   m_configObjects: {}

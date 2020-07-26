@@ -66,6 +66,9 @@ public class PlayerMoveClass : MonoBehaviour
     }
     private void Update()
     {
+        if (GameManager.isGameOverBool())
+            return;
+
         jumpPress = Input.GetButtonDown("Jump"); //按下
         jumpHold = Input.GetButton("Jump");  //长按
         crouchPress = Input.GetButtonDown("Crouch");
@@ -75,6 +78,9 @@ public class PlayerMoveClass : MonoBehaviour
     }
     private void FixedUpdate() //刚体速度需要用fixedupdate
     {
+        if (GameManager.isGameOverBool())
+            return;
+        
         EnvironmentCheck();
         GroundMovement();
         jumpDo();
@@ -99,6 +105,7 @@ public class PlayerMoveClass : MonoBehaviour
     }
 
     void jumpDo() {
+
         if (isHanging) {
             if (jumpPress) {
                 rb.bodyType = RigidbodyType2D.Dynamic;
@@ -125,6 +132,7 @@ public class PlayerMoveClass : MonoBehaviour
             jumpTime = Time.time + jumpHoldTime;
             //用增加y轴二维向量的方式来实现跳跃，Impulse（突然的动力效果）
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            AudioManger.PlayJumpAudio();
         }
         else if (isJump) {
             if (jumpHold)
@@ -149,7 +157,7 @@ public class PlayerMoveClass : MonoBehaviour
         RaycastHit2D rightFootCheck = Raycast(new Vector2(footOffset, 0f), Vector2.down, groundDistance, groundLayer);
 
 
-        //角色是否与地面接触  //coll.IsTouchingLayers(groundLayer)方法
+        //角色是否与地面接触  //coll.IsTouchingLayers(groundLayer )方法
         //判断脚部射线是否射到地面
         if (leftFootCheck || rightFootCheck)
         {
